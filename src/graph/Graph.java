@@ -32,6 +32,9 @@ public class Graph {
         return v1.isNeighbor(v2);
     }
     
+    public Vertex getVertex(int index){
+        return vertices.get(index);
+    }
     /*Uses Dijkstra's algorithm to construct a path in the form of an ArrayList
      *of Vertices between the from Vertex and the to Vertex.
      *
