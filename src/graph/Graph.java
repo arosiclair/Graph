@@ -61,24 +61,41 @@ public class Graph {
         int minDistIndex = 0;
         
         
-        ArrayList<Vertex> clone = new ArrayList();
-        for (Vertex vertex : vertices)
-            clone.add(vertex.clone());
+        //ArrayList<Vertex> clone = new ArrayList();
+        boolean[] visited = new boolean[vertices.size()];
+        for (int i = 0; i < visited.length; i++)
+            visited[i] = false;
         
         Vertex u = null;
+        int numVisited = 0;
+        int minIndex = 0;
         //The Algorithm
-        while (!clone.isEmpty()){
-            u = clone.get(minDistIndex);
-            clone.remove(u);
+        while (numVisited < vertices.size()){
+            
+            //Find and update minIndex
+            for (int i = 0; i < dist.length; i++){
+                //Check if we have already visited this node.
+                if(visited[i] == true) continue;
+                
+                //Check if this distance is less than our current minimum
+                if (dist[i] < dist[minIndex])
+                    minIndex = i;
+            }
+            
+            //The vertex with the smallest distance that we haven't visited yet.
+            u = vertices.get(minIndex);
+            visited[minDistIndex] = true;
+            
             if(dist[minDistIndex] == Integer.MAX_VALUE)
                 break;
             
-            for (Vertex neighbor : u.getNeighbors()){
-                int alt = dist[minDistIndex] + 1;
-                if (alt < dist[clone.indexOf(neighbor)]){
-                    dist[clone.indexOf(neighbor)] = alt;
-                    prev[clone.indexOf(neighbor)] = u;
-                    clone.remove(neighbor);
+            //Examine "U's" neighbors and update their distances.
+            for (Vertex neighbor : vertices.get(minIndex).getNeighbors()){
+                int neighborDist = dist[minDistIndex] + 1;
+                if (neighborDist < dist[vertices.indexOf(neighbor)]){
+                    dist[vertices.indexOf(neighbor)] = neighborDist;
+                    prev[vertices.indexOf(neighbor)] = u;
+                    visited[vertices.indexOf(neighbor)] = true;
                 }
             }
         }
