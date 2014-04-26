@@ -103,9 +103,11 @@ public class Graph {
         //The ArrayList we will return;
         ArrayList<Vertex> path = new ArrayList();
         
-        while (prev[vertices.indexOf(u)] != null){
-            path.add(0, u);
-            u = prev[vertices.indexOf(u)];
+        //We start with a reference to our destination node and then use the
+        //prev array to backtrack until there is no previous node.
+        while (prev[vertices.indexOf(to)] != null){
+            path.add(0, to);
+            to = prev[vertices.indexOf(u)];
         }
         
         return path;       
