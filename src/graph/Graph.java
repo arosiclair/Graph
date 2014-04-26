@@ -24,12 +24,21 @@ public class Graph {
         vertices.add(vertex);
     }
     
+    public Vertex getVertex(int index){
+        return vertices.get(index);
+    }
+    
     public boolean hasVertex(Vertex vertex){
         return vertices.contains(vertex);
     }
     
     public boolean areNeighbors(Vertex v1, Vertex v2){
         return v1.isNeighbor(v2);
+    }
+    
+    //Returns the number of vertices in the Graph.
+    public int size(){
+        return vertices.size();
     }
     
     /*Uses Dijkstra's algorithm to construct a path in the form of an ArrayList
