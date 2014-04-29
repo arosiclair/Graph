@@ -1,7 +1,7 @@
 Graph
 =====
 
-A very basic graph implementation. Created for my PathX Mini-Game project.
+A very basic graph implementatio using ArrayLists and references between Vertex objects. Created for my PathX Mini-Game project.
 
 Purpose
 ======
