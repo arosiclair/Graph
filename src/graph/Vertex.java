@@ -22,7 +22,12 @@ public class Vertex {
     private ArrayList<Vertex> neighbors;
     
     //Number of connected edges.
-    private int degree = neighbors.size();
+    private int degree;
+    
+    public Vertex(){
+        neighbors = new ArrayList();
+        degree = neighbors.size();
+    }
     
 //    public void addEdge(Edge edge){
 //        edges.add(edge);

@@ -20,6 +20,10 @@ public class Graph {
      */
     private ArrayList<Vertex> vertices;
     
+    public Graph(){
+        vertices = new ArrayList();
+    }
+    
     public void addVertex(Vertex vertex){
         vertices.add(vertex);
     }
