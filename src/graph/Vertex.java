@@ -38,6 +38,8 @@ public class Vertex {
     
 
     public void addNeighbor(Vertex neighbor){
+        //Redundancy check
+        if (neighbors.contains(neighbor)) return;
         neighbors.add(neighbor);
     }
     

@@ -84,6 +84,14 @@ public class Graph {
         //The Algorithm
         while (numVisited < vertices.size()){
             
+            //reset the minIndex to the first index that hasn't been visited.
+            for (int i = 0; i < visited.length; i++){
+                if (!visited[i]){
+                    minIndex = i;
+                    break;
+                }
+            }
+            
             //Find and update minIndex
             for (int i = 0; i < dist.length; i++){
                 //Check if we have already visited this node.
@@ -97,6 +105,7 @@ public class Graph {
             //The vertex with the smallest distance that we haven't visited yet.
             u = vertices.get(minIndex);
             visited[minIndex] = true;
+            numVisited++;
             
             if(dist[minIndex] == Integer.MAX_VALUE)
                 break;
@@ -108,7 +117,8 @@ public class Graph {
                 if (neighborDist < dist[neighborIndex]){
                     dist[neighborIndex] = neighborDist;
                     prev[neighborIndex] = u;
-                    visited[neighborIndex] = true;
+                    //visited[neighborIndex] = true;
+                    //numVisited++;
                 }
             }
         }
@@ -172,6 +182,14 @@ public class Graph {
 
         //The Algorithm
         while (numVisited < vertices.size()){
+            
+            //reset the maxIndex to the first index that hasn't been visited.
+            for (int i = 0; i < visited.length; i++){
+                if (!visited[i]){
+                    maxIndex = i;
+                    break;
+                }
+            }
             
             //Find and update maxIndex
             for (int i = 0; i < dist.length; i++){
