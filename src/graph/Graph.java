@@ -70,7 +70,7 @@ public class Graph {
         }
         
         //The dist from the "from" vertex to itself is 0.
-        dist[0] = 0;
+        dist[vertices.indexOf(from)] = 0;
         int minIndex = 0;
         
         
@@ -139,6 +139,9 @@ public class Graph {
     
     
     /**
+     * THIS DOES NOT WORK. DO NOT USE THIS METHOD. DIJKSTRA'S ALGORITHM CANNOT
+     * BE USED TO SOLVE THE LONGEST PATH PROBLEM. THIS WAS ONLY AN ATTEMPT.
+     * 
      * In contrast to findPath, findLongestPath uses a slightly modified version
      * of Dijkstra's algorithm to find the Vertex with the maximum distance from
      * the passed "from" Vertex.
@@ -150,8 +153,9 @@ public class Graph {
      * If the from Vertex is not part of this Graph.
      */
     public ArrayList<Vertex> findLongestPath(Vertex from) throws VertexNotFoundException{
-        //Check if the Vertex is within the graph.
-        if (!hasVertex(from)) throw new VertexNotFoundException();
+        //Check if both vertices are in this graph.
+        if (!hasVertex(from))
+            throw new VertexNotFoundException();
         
         //An integer array keeping track of the distance from the origin vertex
         //The indices in this will correspond to those in the vertices ArrayList
@@ -168,7 +172,7 @@ public class Graph {
         }
         
         //The dist from the "from" vertex to itself is 0.
-        dist[0] = 0;
+        dist[vertices.indexOf(from)] = 0;
         int maxIndex = 0;
         
         
@@ -179,7 +183,6 @@ public class Graph {
         
         Vertex u = null;
         int numVisited = 0;
-
         //The Algorithm
         while (numVisited < vertices.size()){
             
@@ -196,14 +199,15 @@ public class Graph {
                 //Check if we have already visited this node.
                 if(visited[i] == true) continue;
                 
-                //Check if this distance is greater than our current maximum
+                //Check if this distance is greater than our current minimum
                 if (dist[i] > dist[maxIndex])
                     maxIndex = i;
             }
             
-            //The vertex with the maximum distance that we haven't visited yet.
+            //The vertex with the greatest distance that we haven't visited yet.
             u = vertices.get(maxIndex);
             visited[maxIndex] = true;
+            numVisited++;
             
             if(dist[maxIndex] == Integer.MIN_VALUE)
                 break;
@@ -215,8 +219,17 @@ public class Graph {
                 if (neighborDist > dist[neighborIndex]){
                     dist[neighborIndex] = neighborDist;
                     prev[neighborIndex] = u;
-                    visited[neighborIndex] = true;
+                    //visited[neighborIndex] = true;
+                    //numVisited++;
                 }
+            }
+        }
+
+        //Find and update maxIndex again.
+        for (int i = 0; i < dist.length; i++) {
+            //Check if this distance is greater than our current maximum
+            if (dist[i] > dist[maxIndex]) {
+                maxIndex = i;
             }
         }
 
@@ -226,12 +239,12 @@ public class Graph {
         //We start with a reference to our destination node and then use the
         //prev array to backtrack until there is no previous node.
         Vertex stepBack = vertices.get(maxIndex);
-        
         while (stepBack != null){
             path.add(0, stepBack);
             stepBack = prev[vertices.indexOf(stepBack)];
         }
         
         return path;
-    }
+        }
+
 }
