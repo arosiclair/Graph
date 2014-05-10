@@ -139,12 +139,10 @@ public class Graph {
     
     
     /**
-     * THIS DOES NOT WORK. DO NOT USE THIS METHOD. DIJKSTRA'S ALGORITHM CANNOT
-     * BE USED TO SOLVE THE LONGEST PATH PROBLEM. THIS WAS ONLY AN ATTEMPT.
+     * In contrast to findPath, findLongestPath also uses Dijkstra's algorithm 
+     * to generate the shortest path to each node however, this method returns the
+     * longest path found.
      * 
-     * In contrast to findPath, findLongestPath uses a slightly modified version
-     * of Dijkstra's algorithm to find the Vertex with the maximum distance from
-     * the passed "from" Vertex.
      * @param from
      * The Vertex from which we will find another Vertex that is the farthest away.
      * @return
@@ -167,13 +165,13 @@ public class Graph {
         
         //initializes the two tracking arrays.
         for (int i = 0; i < vertices.size(); i++){
-            dist[i] = Integer.MIN_VALUE;
+            dist[i] = Integer.MAX_VALUE;
             prev[i] = null;
         }
         
         //The dist from the "from" vertex to itself is 0.
         dist[vertices.indexOf(from)] = 0;
-        int maxIndex = 0;
+        int minIndex = 0;
         
         
         //ArrayList<Vertex> clone = new ArrayList();
@@ -186,37 +184,37 @@ public class Graph {
         //The Algorithm
         while (numVisited < vertices.size()){
             
-            //reset the maxIndex to the first index that hasn't been visited.
+            //reset the minIndex to the first index that hasn't been visited.
             for (int i = 0; i < visited.length; i++){
                 if (!visited[i]){
-                    maxIndex = i;
+                    minIndex = i;
                     break;
                 }
             }
             
-            //Find and update maxIndex
+            //Find and update minIndex
             for (int i = 0; i < dist.length; i++){
                 //Check if we have already visited this node.
                 if(visited[i] == true) continue;
                 
-                //Check if this distance is greater than our current minimum
-                if (dist[i] > dist[maxIndex])
-                    maxIndex = i;
+                //Check if this distance is less than our current minimum
+                if (dist[i] < dist[minIndex])
+                    minIndex = i;
             }
             
-            //The vertex with the greatest distance that we haven't visited yet.
-            u = vertices.get(maxIndex);
-            visited[maxIndex] = true;
+            //The vertex with the smallest distance that we haven't visited yet.
+            u = vertices.get(minIndex);
+            visited[minIndex] = true;
             numVisited++;
             
-            if(dist[maxIndex] == Integer.MIN_VALUE)
+            if(dist[minIndex] == Integer.MAX_VALUE)
                 break;
             
             //Examine "U's" neighbors and update their distances.
             for (Vertex neighbor : u.getNeighbors()){
                 int neighborIndex = vertices.indexOf(neighbor);
-                int neighborDist = dist[maxIndex] + 1;
-                if (neighborDist > dist[neighborIndex]){
+                int neighborDist = dist[minIndex] + 1;
+                if (neighborDist < dist[neighborIndex]){
                     dist[neighborIndex] = neighborDist;
                     prev[neighborIndex] = u;
                     //visited[neighborIndex] = true;
@@ -225,26 +223,29 @@ public class Graph {
             }
         }
 
-        //Find and update maxIndex again.
+        int maxIndex = 0;
+        int maxDist = 0;
+        //Now find the index of the Vertex that is farthest from our "from" vertex
         for (int i = 0; i < dist.length; i++) {
             //Check if this distance is greater than our current maximum
-            if (dist[i] > dist[maxIndex]) {
+            if (dist[i] > maxDist) {
                 maxIndex = i;
+                maxDist = dist[i];
             }
         }
 
         //The ArrayList we will return;
         ArrayList<Vertex> path = new ArrayList();
-        
+
         //We start with a reference to our destination node and then use the
         //prev array to backtrack until there is no previous node.
         Vertex stepBack = vertices.get(maxIndex);
-        while (stepBack != null){
+        while (stepBack != null) {
             path.add(0, stepBack);
             stepBack = prev[vertices.indexOf(stepBack)];
         }
-        
+
         return path;
-        }
+    }
 
 }
