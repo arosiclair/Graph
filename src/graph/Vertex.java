@@ -43,6 +43,13 @@ public class Vertex {
         neighbors.add(neighbor);
     }
     
+    public void removeNeighbor(Vertex neighbor) throws VertexNotFoundException{
+        if(!neighbors.contains(neighbor))
+            throw new VertexNotFoundException();
+        else
+            neighbors.remove(neighbor);
+    }
+    
     public boolean isNeighbor (Vertex vertex){
         return getNeighbors().contains(vertex);
     }
