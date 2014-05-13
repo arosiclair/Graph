@@ -25,7 +25,13 @@ public class Graph {
     }
     
     public void addVertex(Vertex vertex){
+        //Redundancy check
+        if (!vertices.contains(vertex))
         vertices.add(vertex);
+    }
+    
+    public void removeVertex(Vertex vertex){
+        vertices.remove(vertex);
     }
     
     public Vertex getVertex(int index){
@@ -247,5 +253,12 @@ public class Graph {
 
         return path;
     }
+    
+//    public Graph clone(){
+//        Graph clone = new Graph();
+//        for (Vertex v : vertices)
+//            v.clone();
+//        
+//    }
 
 }

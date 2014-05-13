@@ -64,12 +64,12 @@ public class Vertex {
     
     
     
-    public Vertex clone(){
-        Vertex clone = new Vertex();
-        for (Vertex neighbor : neighbors)
-            clone.addNeighbor(neighbor);
-        
-        return clone;
-    }
+//    public Vertex clone(){
+//        Vertex clone = new Vertex();
+//        for (Vertex neighbor : neighbors)
+//            clone.addNeighbor(neighbor);
+//        
+//        return clone;
+//    }
 
 }
